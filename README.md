@@ -15,7 +15,7 @@
 - Валидация введенных доменов
 
 ## Установка
-1. Скачайте расширение в zip
+1. Скачайте расширение в zip (https://github.com/lexfoxer/TabKeeper/archive/refs/heads/main.zip)
 2. Откройте браузер на основе Chromium и перейдите в `chrome://extensions/`
 3. Включите режим разработчика
 4. Нажмите "Загрузить распакованное расширение / Load unpacked"
