@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "TabKeeper",
+  "description": "Предотвращает автоматическую выгрузку вкладок браузером для указанных вами доменов",
+  "version": "1.0.0",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "TabKeeper",
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "contextMenus"
+  ],
+  "default_locale": "ru"
+}

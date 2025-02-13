@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 380px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+    .domain-list {
+      max-height: 300px;
+      overflow-y: auto;
+      margin: 15px 0;
+    }
+    .domain-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      font-size: 16px;
+    }
+    .delete-btn {
+      color: #dc3545;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px 8px;
+    }
+    #add-domain {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 8px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      transition: all 0.2s ease-in-out;
+      font-size: 16px;
+    }
+    #add-domain:hover {
+      border-color: #80bdff;
+    }
+    #add-domain:focus {
+      outline: none;
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .mode-switch {
+      margin: 12px 0;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      font-size: 16px;
+    }
+    .mode-switch label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .mode-switch input[type="radio"] {
+      width: 16px;
+      height: 16px;
+    }
+    .item-type {
+      font-size: 14px;
+      color: #666;
+      margin-right: 10px;
+    }
+    .invalid {
+      border-color: #dc3545 !important;
+      background-color: #fff8f8;
+    }
+    .invalid:focus {
+      outline-color: #dc3545;
+    }
+    .hint, .examples {
+      font-size: 14px;
+      color: #666;
+      margin: 8px 0;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      display: none;
+      line-height: 1.5;
+    }
+    .hint.show, .examples.show {
+      display: block;
+    }
+    .examples-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+    .example-item {
+      margin: 4px 0;
+      color: #495057;
+    }
+    .search-container {
+      position: relative;
+      margin: 15px 0 5px 0;
+    }
+    #search-input {
+      width: calc(100% - 20px);
+      padding: 8px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    #search-input:focus {
+      outline: none;
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.15);
+    }
+    .search-clear {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 5px;
+      display: none;
+    }
+    .search-clear:hover {
+      color: #dc3545;
+    }
+    .search-clear.show {
+      display: block;
+    }
+    .no-results {
+      text-align: center;
+      color: #666;
+      padding: 15px;
+      font-style: italic;
+    }
+    .spoiler {
+      margin-bottom: 15px;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .spoiler-header {
+      padding: 12px;
+      background: #f8f9fa;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      color: #495057;
+      transition: background-color 0.2s;
+    }
+    .spoiler-header:hover {
+      background: #e9ecef;
+    }
+    .spoiler-header .arrow {
+      transition: transform 0.3s;
+    }
+    .spoiler-header.active .arrow {
+      transform: rotate(90deg);
+    }
+    .spoiler-content {
+      padding: 15px;
+      display: none;
+      border-top: 1px solid #dee2e6;
+      background: white;
+    }
+    .spoiler-content.show {
+      display: block;
+    }
+    #add-btn {
+      margin-top: 15px;
+    }
+    .search-container {
+      margin: 0 0 15px 0;
+    }
+    .domain-list {
+      margin: 0 !important;
+    }
+    .validation-message {
+      font-size: 14px;
+      color: #dc3545;
+      margin: 5px 0;
+      min-height: 20px;
+      transition: opacity 0.2s;
+    }
+    .validation-message:empty {
+      min-height: 0;
+      margin: 0;
+    }
+    .settings-group {
+      margin: 10px 0;
+    }
+    .settings-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #495057;
+    }
+    .settings-select {
+      padding: 4px 8px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      background: white;
+      width: 100%;
+    }
+    .settings-select:focus {
+      outline: none;
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="spoiler">
+    <div class="spoiler-header" data-target="add-section">
+      <span class="arrow">▶</span> <span data-i18n="add_domain_section"></span>
+    </div>
+    <div class="spoiler-content" id="add-section">
+      <div class="mode-switch">
+        <label>
+          <input type="radio" name="mode" value="domain" checked> <span data-i18n="domain_mode"></span>
+        </label>
+        <label>
+          <input type="radio" name="mode" value="regexp"> <span data-i18n="regexp_mode"></span>
+        </label>
+      </div>
+      <input type="text" id="add-domain" data-i18n-placeholder="add_domain_placeholder">
+      <div class="validation-message" id="validation-message"></div>
+      <div class="examples" id="domain-examples">
+        <div class="examples-title" data-i18n="examples_title"></div>
+        <div class="example-item" data-i18n="example_exact"></div>
+        <div class="example-item" data-i18n="example_port"></div>
+        <div class="example-item" data-i18n="example_wildcard"></div>
+        <div class="example-item" data-i18n="example_wildcard_port"></div>
+        <div class="example-item" data-i18n="example_localhost"></div>
+      </div>
+      <div class="hint" id="regexp-hint">
+        <div class="examples-title" data-i18n="regexp_examples_title"></div>
+        <div class="example-item" data-i18n="regexp_example_wildcard"></div>
+        <div class="example-item" data-i18n="regexp_example_exact"></div>
+      </div>
+      <button id="add-btn" data-i18n="add_button"></button>
+    </div>
+  </div>
+
+  <div class="spoiler">
+    <div class="spoiler-header" data-target="list-section">
+      <span class="arrow">▶</span> <span data-i18n="domain_list_section"></span>
+    </div>
+    <div class="spoiler-content" id="list-section">
+      <div class="search-container">
+        <input type="text" id="search-input" data-i18n-placeholder="search_placeholder">
+        <span class="search-clear" id="search-clear">✕</span>
+      </div>
+      <div class="domain-list" id="domain-list"></div>
+    </div>
+  </div>
+
+  <div class="spoiler">
+    <div class="spoiler-header" data-target="description-section">
+      <span class="arrow">▶</span> <span data-i18n="instruction_section"></span>
+    </div>
+    <div class="spoiler-content" id="description-section">
+      <p data-i18n="instruction_p1"></p>
+      <p data-i18n="instruction_p2"></p>
+      <p data-i18n="instruction_p3"></p>
+      <ul style="margin: 5px 0 5px 20px;">
+        <li data-i18n="instruction_li1"></li>
+        <li data-i18n="instruction_li2"></li>
+        <li data-i18n="instruction_li3"></li>
+        <li data-i18n="instruction_li4"></li>
+      </ul>
+      <p data-i18n="instruction_p4"></p>
+      <ul style="margin: 5px 0 5px 20px;">
+        <li data-i18n="instruction_li5"></li>
+        <li data-i18n="instruction_li6"></li>
+        <li data-i18n="instruction_li7"></li>
+        <li data-i18n="instruction_li8"></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="spoiler">
+    <div class="spoiler-header" data-target="settings-section">
+      <span class="arrow">▶</span> <span data-i18n="settings_section"></span>
+    </div>
+    <div class="spoiler-content" id="settings-section">
+      <div class="settings-group">
+        <label data-i18n="language_label"></label>
+        <select id="language-select" class="settings-select">
+          <option value="ru">Русский</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
