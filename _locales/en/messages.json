@@ -1,0 +1,8 @@
+{
+  "extensionName": {
+    "message": "TabKeeper"
+  },
+  "extensionDescription": {
+    "message": "Prevents automatic tab discarding by the browser for domains you specify"
+  }
+} 

@@ -1,1 +1,8 @@
-{}
+{
+  "extensionName": {
+    "message": "TabKeeper"
+  },
+  "extensionDescription": {
+    "message": "Предотвращает автоматическую выгрузку вкладок браузером для указанных вами доменов"
+  }
+}
