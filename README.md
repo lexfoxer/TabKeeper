@@ -15,6 +15,11 @@
 - Валидация введенных доменов
 
 ## Установка
+
+### Вариант 1 - установка через Chrome Web Store
+Установить расширение можно по ссылке: https://chromewebstore.google.com/detail/tabkeeper/kaegbaeaojmkmpoeofjpbjhnfcjkojmc
+
+### Вариант 2 - установка вручную
 1. Скачайте расширение в zip (https://github.com/lexfoxer/TabKeeper/archive/refs/heads/main.zip)
 2. Откройте браузер на основе Chromium и перейдите в `chrome://extensions/`
 3. Включите режим разработчика
